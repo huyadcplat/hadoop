@@ -3322,8 +3322,8 @@ public class BlockManager implements BlockStatsMXBean {
   private boolean shouldProcessExtraRedundancy(NumberReplicas num,
       int expectedNum) {
     final int numCurrent = num.liveReplicas();
-    return numCurrent > expectedNum ||
-        (numCurrent == expectedNum && num.redundantInternalBlocks() > 0);
+    // 解决block状态更新失误导致block无法正确重建
+    return numCurrent > expectedNum || num.redundantInternalBlocks() > 0;
   }
 
   /**
